@@ -34,10 +34,42 @@ export default function appReducer(state=initialState,action){
                         text: action.payload,
                         completed: false
                     }
-                ]
-                
+                ]                
             }
-    
+        case 'todos/todoToggled': {
+            return{
+                // again copy the entire state object
+                ...state,
+                // this time, we need to make a copy of the old todos array
+                todos: state.todos.map(todo=>{
+                    //if this is not the todo item we're looking for, leave it alone
+                    if(todo.id !== action.payload){
+                        return todo
+                    }
+                    // we've found the todo that has to change. Return a copy
+                    return{
+                        ...todo,
+                        // flip the copmleted flag
+                        completed: !todo.completed
+                    }
+
+                })
+            }
+        }
+
+        case 'filters/statusFilterChanged':{
+            return{
+                // copy the whole state
+                ...state,
+                //overwrite the filters value
+                filters:{
+                    // copy the other filters fields
+                    ...state.filters,
+                    // and replace the status field with  the new value
+                    status: action.payload
+                }
+            }
+        }    
         
         default:
             // if this reducer doesn't recognize the action type, 
