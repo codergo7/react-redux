@@ -35,6 +35,9 @@ store.dispatch({type: 'filters/statusFilterChanged', payload: 'Active'})
 
 store.dispatch( {type: 'filters/colorFilterChanged', payload: {color:'red', changeType: 'added'}})
 
+//stop listening to state updates
+unsubscribe()
+
 // Dispatch one more action to see what happens
 
 store.dispatch({ type: 'todos/todoAdded', payload: 'Try creating a store' })
